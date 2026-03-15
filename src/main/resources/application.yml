@@ -1,0 +1,16 @@
+ratelimit:
+  configs:
+    http-bin:
+      limit: 50
+    citi/master:
+      limit: 50
+    zolo-bank:
+      limit: 70
+
+spring:
+  cache:
+    type: caffeine
+    cache-names:
+      - customerLimit
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=2m
