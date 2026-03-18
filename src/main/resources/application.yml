@@ -1,16 +1,40 @@
-ratelimit:
-  configs:
-    http-bin:
-      limit: 50
-    citi/master:
-      limit: 50
-    zolo-bank:
-      limit: 70
+#ratelimit:
+#  configs:
+#    http-bin:
+#      limit: 50
+#    citi/master:
+#      limit: 50
+#    zolo-bank:
+#      limit: 0
+#
+#spring:
+#  cache:
+#    type: caffeine
+#    cache-names:
+#      - customerLimit
+#    caffeine:
+#      spec: maximumSize=500,expireAfterWrite=2m
+#ratelimiting:
+#  configs:
+#    http-bin:
+#      limit: 100
+#    mcbin-test:
+#      limit: 200
+#    payment-service:
+#      limit: 300
+
+ratelimiting:
+  "[http-bin]":
+    enabled: true
+    limit: 30
+  "[mcbin-test]":
+    enabled: false
+    limit: 20
 
 spring:
   cache:
     type: caffeine
     cache-names:
-      - customerLimit
+      - ratelimit
     caffeine:
       spec: maximumSize=500,expireAfterWrite=2m

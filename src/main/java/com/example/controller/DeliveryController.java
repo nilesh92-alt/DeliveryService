@@ -10,11 +10,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DeliveryController {
 
-    private final DeliveryService deliveryService;
+//    private final DeliveryService deliveryService;
 
-    @GetMapping("/getLimitDelivery")
-    public int getLimitDelivery(@RequestParam String webhookUrl) {
+    private final Flow2RateLimitingService flow2RateLimitingService;
 
-        return deliveryService.checkRateLimit(webhookUrl);
+//    @GetMapping("/getLimitDelivery")
+//    public int getLimitDelivery(@RequestParam String webhookUrl) {
+//        return deliveryService.checkRateLimit(webhookUrl);
+//    }
+
+    @GetMapping("/limit")
+    public void rateLimit(@RequestParam String webhookUrl) {
+        if (flow2RateLimitingService.shouldSend(webhookUrl) == Decision.OK_TO_SEND) {
+            System.out.println("Allow request");
+        } else {
+            System.out.println("Dont allow current request");
+        }
     }
 }
